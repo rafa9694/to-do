@@ -1,0 +1,15 @@
+<div class="container">
+  <h1>To Do List: {{ root.name }}</h1>
+  <form [formGroup]="formList" class="form">
+    <mat-form-field appearance="outline">
+      <mat-label>Novo Item</mat-label>
+      <input formControlName="nameItem" matInput>
+    </mat-form-field>
+    <button (click)="addListitem()" mat-raised-button color="primary">Adicionar</button>
+  </form>
+  <mat-list>
+    <mat-list-item *ngFor="let node of nodes; let indexOfelement=index;">
+      <app-list-item [node]="node" [position]="indexOfelement + 1" [name]="node.name"></app-list-item>
+    </mat-list-item>
+  </mat-list>
+</div>

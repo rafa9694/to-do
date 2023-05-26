@@ -1,0 +1,17 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 1%;
+  background-color: #828282;
+
+  h1 {
+    margin: 0 0 8px;
+    color: white;
+  }
+
+  .form mat-form-field {
+    margin-right: 10px;
+  }
+}

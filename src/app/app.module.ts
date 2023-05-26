@@ -3,6 +3,11 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HomeComponentModule } from './pages/home/home.component.module';
+import { ListComponentModule } from './pages/list/list.component.module';
+import { ListItemComponentModule } from './components/list-item/list-item.component.module';
+
 
 @NgModule({
   declarations: [
@@ -10,7 +15,11 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    HomeComponentModule,
+    ListComponentModule,
+    ListItemComponentModule
   ],
   providers: [],
   bootstrap: [AppComponent]
