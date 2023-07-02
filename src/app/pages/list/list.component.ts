@@ -35,6 +35,11 @@ export class ListComponent {
         this.root = resp[0];
         this.indexedDBService.getChildren(this.root.id).then(resp => {
           this.nodes = resp;
+          this.nodes.forEach(node => {
+            this.indexedDBService.getChildren(node.id).then(resp => {
+              node.children = resp;
+            });
+          })
         })
       } else {
         this.router.navigate(['']);
@@ -44,6 +49,7 @@ export class ListComponent {
     })
 
   }
+
   addListitem() {
     let name = this.formList.get('nameItem')?.value;
     if (name) {

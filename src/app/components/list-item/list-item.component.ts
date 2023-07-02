@@ -12,6 +12,7 @@ export class ListItemComponent {
 
   @Input() name: string = "";
   @Input() position: number = 0;
+  @Input() parentPosition: number = 0;
   @Input() node: any;
 
   title: string = "";
@@ -20,7 +21,10 @@ export class ListItemComponent {
     private indexedDBService: IndexedDBService) { }
 
   ngOnInit() {
-    this.title = this.position.toString() + ") " + this.name;
+    if (this.parentPosition == 0)
+      this.title = this.position.toString() + ") " + this.name;
+    else
+      this.title = this.parentPosition.toString() + "." + this.position.toString() + ") " + this.name;
   }
 
   addSubItem() {
@@ -43,5 +47,9 @@ export class ListItemComponent {
         })
       }
     });
+  }
+
+  deleteSubItem() {
+
   }
 }
