@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogListItemComponent } from './dialog-list-item/dialog-list-item.component';
 import { IndexedDBService } from 'src/app/providers/indexed-db.service';
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-list-item',
@@ -50,6 +51,8 @@ export class ListItemComponent {
   }
 
   deleteSubItem() {
-
+    this.dialog.open(DialogComponent, {
+      data: { title: "Aviso!", message: "Tem certeza que deseja deletar esse item?", buttonCancel: "Não", buttonConfirm: "Sim" },
+    });
   }
 }

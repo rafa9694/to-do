@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponentModule } from './pages/home/home.component.module';
 import { ListComponentModule } from './pages/list/list.component.module';
 import { ListItemComponentModule } from './components/list-item/list-item.component.module';
+import { DialogModule } from './components/dialog/dialog.component.module';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { ListItemComponentModule } from './components/list-item/list-item.compon
     BrowserAnimationsModule,
     HomeComponentModule,
     ListComponentModule,
-    ListItemComponentModule
+    ListItemComponentModule,
+    DialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]
