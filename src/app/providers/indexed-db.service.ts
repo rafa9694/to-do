@@ -40,6 +40,24 @@ export class IndexedDBService extends Dexie {
   }
 
   excluirNo(id: number): Promise<void> {
-    return this.tree.delete(id);
+    return this.tree.delete(id).then(async resp => {
+      const parents = await this.tree.where('children').anyOf(id).toArray();
+
+      parents.forEach(async parent => {
+        const indice = parent.children.indexOf(id);
+        if (indice !== -1) {
+          parent.children.splice(indice, 1);
+        }
+        await this.tree.update(parent.id, parent);
+      });
+
+      const children = await this.tree.where('parent').equals(id).toArray();
+
+
+      children.forEach(async child => {
+        await this.tree.delete(child.id);
+      });
+
+    });
   }
 }

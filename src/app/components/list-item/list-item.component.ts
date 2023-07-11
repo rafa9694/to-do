@@ -51,8 +51,13 @@ export class ListItemComponent {
   }
 
   deleteSubItem() {
-    this.dialog.open(DialogComponent, {
+    const dialogRef = this.dialog.open(DialogComponent, {
       data: { title: "Aviso!", message: "Tem certeza que deseja deletar esse item?", buttonCancel: "Não", buttonConfirm: "Sim" },
+    });
+
+    dialogRef.beforeClosed().subscribe(async result => {
+      if (result)
+        await this.indexedDBService.excluirNo(this.node.id);
     });
   }
 }
