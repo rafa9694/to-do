@@ -5,6 +5,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 export interface DialogData {
   nameSubItem: string;
   name: string;
+  type: string;
+  title: string;
 }
 
 @Component({
@@ -21,12 +23,20 @@ export class DialogListItemComponent {
     public dialogRef: MatDialogRef<DialogListItemComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
   ) {
+
     this.formDialog = new FormGroup({
-      nameSubItem: new FormControl('')
+      name: new FormControl('')
     });
   }
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  getLabelName(): string {
+    if (this.data.type == 'edit') {
+      return "Novo nome:";
+    }
+    return "Nome:";
   }
 }

@@ -30,7 +30,7 @@ export class ListItemComponent {
 
   addSubItem() {
     const dialogRef = this.dialog.open(DialogListItemComponent, {
-      data: { name: this.title, nameSubItem: "" },
+      data: { title: "Criar Subitem - " + this.title, name: "name", nameSubItem: "", type: "insert" },
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -59,5 +59,18 @@ export class ListItemComponent {
       if (result)
         await this.indexedDBService.excluirNo(this.node.id);
     });
+  }
+
+  editItem(node: any) {
+    const dialogRef = this.dialog.open(DialogListItemComponent, {
+      data: { title: "Editar: " + this.title, name: node.name, nameSubItem: "", type: "edit" },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        node.name = result;
+        this.indexedDBService.updateNode(node).then(() => console.log("Atualizado node"));
+      }
+    })
   }
 }
