@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Node } from 'src/app/models/node';
 import { IndexedDBService } from 'src/app/providers/indexed-db.service';
 
 @Component({
@@ -12,8 +13,8 @@ export class ListComponent {
 
   listName: string = "";
   formList: FormGroup;
-  root: any;
-  nodes: any[] = [];
+  root: Node;
+  nodes: Node[] = [];
 
   constructor(private indexedDBService: IndexedDBService,
     private router: Router) {
@@ -21,7 +22,8 @@ export class ListComponent {
       nameItem: new FormControl('')
     });
     this.root = {
-      parent: null,
+      id: 0,
+      parent: 0,
       children: [],
       name: ""
     };
@@ -53,16 +55,49 @@ export class ListComponent {
   addListitem() {
     let name = this.formList.get('nameItem')?.value;
     if (name) {
-      const node = {
+      const nodeAdd = {
         parent: this.root.id,
         children: [],
         name: name
       };
-      this.indexedDBService.adicionarNo(node)
+      this.indexedDBService.adicionarNo(nodeAdd)
         .then(id => {
-          this.nodes[this.nodes.length] = node;
+          let nodeCreated: Node = {
+            id: id,
+            parent: nodeAdd.parent,
+            children: [],
+            name: nodeAdd.name
+          };
+          this.nodes[this.nodes.length] = nodeCreated;
           console.log('Root node created with ID:', id);
         });
     }
+  }
+
+  deleteItem(nodeDelete: Node) {
+    this.nodes = this.nodes.filter(node => node.id != nodeDelete.id);
+  }
+
+  deleteSubItem(nodeDelete: Node) {
+    let nodeParent = this.nodes.find(node => node.parent == nodeDelete.id);
+    if (nodeParent)
+      nodeParent.children.filter(children => children != nodeDelete.id);
+  }
+
+  addSubItem(nodeAdd: Node) {
+    let nodeParent = this.nodes.find(node => node.parent == nodeAdd.id);
+    if (nodeParent)
+      nodeParent.children.push(nodeAdd.id);
+  }
+
+  getNode(id: number): Node {
+    let node: Node = {
+      id: id,
+      parent: 0,
+      children: [],
+      name: ''
+    };
+
+    return node;
   }
 }

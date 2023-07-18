@@ -1,12 +1,12 @@
 <div [ngClass]="parentPosition == 0 ? 'container-list-item parent' : 'container-list-item children'">
 	<mat-label>{{ title }}</mat-label>
-	<button *ngIf="parentPosition == 0" (click)="addSubItem()" mat-icon-button>
+	<button *ngIf="parentPosition == 0" (click)="onAddSubItem()" mat-icon-button>
 		<mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="add_box"></mat-icon>
 	</button>
-	<button mat-icon-button (click)="editItem()">
+	<button mat-icon-button (click)="onEdit()">
 		<mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="edit"></mat-icon>
 	</button>
-	<button mat-icon-button (click)="deleteSubItem()">
+	<button mat-icon-button (click)="onDelete()">
 		<mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="delete_forever"></mat-icon>
 	</button>
 </div>
