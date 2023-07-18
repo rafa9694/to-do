@@ -11,7 +11,6 @@ import { DialogComponent } from '../dialog/dialog.component';
 })
 export class ListItemComponent {
 
-  @Input() name: string = "";
   @Input() position: number = 0;
   @Input() parentPosition: number = 0;
   @Input() node: any;
@@ -22,10 +21,7 @@ export class ListItemComponent {
     private indexedDBService: IndexedDBService) { }
 
   ngOnInit() {
-    if (this.parentPosition == 0)
-      this.title = this.position.toString() + ") " + this.name;
-    else
-      this.title = this.parentPosition.toString() + "." + this.position.toString() + ") " + this.name;
+    this.setTitle();
   }
 
   addSubItem() {
@@ -61,16 +57,24 @@ export class ListItemComponent {
     });
   }
 
-  editItem(node: any) {
+  editItem() {
     const dialogRef = this.dialog.open(DialogListItemComponent, {
-      data: { title: "Editar: " + this.title, name: node.name, nameSubItem: "", type: "edit" },
+      data: { title: "Editar: " + this.title, name: this.node.name, nameSubItem: "", type: "edit" },
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        node.name = result;
-        this.indexedDBService.updateNode(node).then(() => console.log("Atualizado node"));
+        this.node.name = result;
+        this.setTitle();
+        this.indexedDBService.updateNode(this.node).then(() => console.log("Atualizado node"));
       }
     })
+  }
+
+  setTitle() {
+    if (this.parentPosition == 0)
+      this.title = this.position.toString() + ") " + this.node.name;
+    else
+      this.title = this.parentPosition.toString() + "." + this.position.toString() + ") " + this.node.name;
   }
 }

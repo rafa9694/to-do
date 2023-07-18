@@ -9,12 +9,11 @@
   </form>
   <mat-list>
     <mat-list-item *ngFor="let node of nodes; let indexOfelement=index;">
-      <app-list-item [node]="node" [position]="indexOfelement + 1" [name]="node.name">
+      <app-list-item [node]="node" [position]="indexOfelement + 1">
       </app-list-item>
       <mat-list>
         <mat-list-item *ngFor="let children of node.children; let indexOfChildren=index;">
-          <app-list-item [node]="children" [position]="indexOfChildren +1" [parentPosition]="indexOfelement + 1"
-            [name]="children.name">
+          <app-list-item [node]="children" [position]="indexOfChildren +1" [parentPosition]="indexOfelement + 1">
           </app-list-item>
         </mat-list-item>
       </mat-list>
